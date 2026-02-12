@@ -1,103 +1,165 @@
+$color-accent: #9b59b6;
+$color-bg: #0a0c0f;
+$color-surface: #1e1f25;
+$color-text: #eaeef2;
+$radius-lg: 20px;
+$radius-sm: 8px;
+$shadow: 0 12px 24px -8px rgba(0,0,0,0.8);
 
-$color-primary: #3498db;
-$color-bg: #111;
-$color-surface: #1b1b1b;
-$color-text: #f5f5f5;
-$radius: 14px;
-$gap: 14px;
-
-@mixin button($bg) {
-  display: inline-block;
-  padding: 10px 14px;
-  border-radius: 10px;
+@mixin button($bg: $color-accent, $text: white) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 40px;
   background: $bg;
-  color: white;
+  color: $text;
   text-decoration: none;
   font-weight: 600;
   line-height: 1;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($bg, 8%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba($bg, 0.35);
+  }
 }
 
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background: $color-bg;
   color: $color-text;
 }
 
 .page {
-  max-width: 980px;
-  margin: 40px auto;
-  padding: 0 16px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 24px;
   display: grid;
-  gap: 22px;
+  gap: 32px;
 }
 
 .product-card {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: $gap;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
   background: $color-surface;
-  border-radius: $radius;
-  padding: 18px;
+  border-radius: $radius-lg;
+  padding: 24px;
+  box-shadow: $shadow;
 
-  &--accent {
-    border: 2px solid $color-primary;
+  &--featured {
+    border-left: 6px solid $color-accent;
+    background: lighten($color-surface, 3%);
   }
 
   &__image {
-    border-radius: $radius;
-    min-height: 160px;
-
-    background:
-      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 45%),
-      linear-gradient(135deg, rgba(52,152,219,0.45), rgba(155,89,182,0.35));
+    border-radius: $radius-lg;
+    min-height: 200px;
+    background: 
+      linear-gradient(145deg, rgba(155,89,182,0.25), rgba(52,152,219,0.15)),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 4px, transparent 4px, transparent 12px);
   }
 
   &__content {
-    display: grid;
-    gap: 10px;
-    align-content: start;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
 
   &__title {
     margin: 0;
-    font-size: 22px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   &__desc {
     margin: 0;
-    opacity: 0.85;
-    line-height: 1.4;
+    opacity: 0.8;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #f1c40f;
+    font-weight: 600;
   }
 
   &__footer {
-    margin-top: 10px;
+    margin-top: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
   }
 
   &__price {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 800;
+    color: $color-accent;
+  }
+
+  &__old-price {
+    font-size: 16px;
+    opacity: 0.5;
+    text-decoration: line-through;
+    margin-left: 8px;
   }
 }
 
 .btn {
-  @include button($color-primary);
+  @include button();
 
-  &:hover {
-    filter: brightness(1.05);
+  &--outline {
+    @include button(transparent, $color-text);
+    border: 2px solid $color-accent;
+    
+    &:hover {
+      background: $color-accent;
+      color: white;
+    }
+  }
+
+  &--small {
+    padding: 8px 18px;
+    font-size: 14px;
   }
 }
 
-.note {
-  background: #151515;
-  border-radius: $radius;
-  padding: 16px;
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba($color-accent, 0.15);
+  color: $color-accent;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 
-  &__title { margin: 0 0 10px; font-size: 18px; }
-  &__list { margin: 0; padding-left: 18px; opacity: 0.9; }
+  &--new {
+    background: #2ecc71;
+    color: white;
+  }
+
+  &--sale {
+    background: #e74c3c;
+    color: white;
+  }
 }
